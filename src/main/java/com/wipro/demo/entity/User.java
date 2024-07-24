@@ -12,8 +12,8 @@ import jakarta.validation.constraints.Size;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
 	@NotNull
 	@Size(min = 4, max = 20, message = "Username should be between 4 to 20 characters")
@@ -32,7 +32,7 @@ public class User {
 
 	public User() {}
 
-	public User(Long id,
+	public User(Integer id,
 			@NotNull @Size(min = 4, max = 20, message = "Username should be between 4 to 20 characters") String username,
 			@NotNull @Size(min = 8, message = "Password should be at least 8 characters") String password,
 			@NotNull String role, @NotNull String status) {
@@ -44,11 +44,11 @@ public class User {
 		this.status = status;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
