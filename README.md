@@ -18,7 +18,8 @@ Represents a flat or apartment in the system.
 
 - **id**: `Integer` - Unique identifier for the flat.
 - **address**: `String` - The address of the flat. (Not Null)
-- **status**: `String` - The status of the flat. (Not Null) Possible values: "available", "occupied".
+- **availability**: `Boolean` - The availability of the flat. (Not Null) 
+- **cost**: `Integer` - The rent of the flat. (Not Null)
 - **ownerId**: `Integer` - The ID of the user who owns the flat. (Not Null)
 
 ### Booking
