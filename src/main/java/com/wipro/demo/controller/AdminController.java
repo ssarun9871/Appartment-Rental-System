@@ -24,33 +24,35 @@ public class AdminController {
 
 
     @GetMapping("/signup-requests")
-    public List<Tenant> viewSignupRequests() {
+    public List<Object> viewSignupRequests() {
         return adminService.viewSignupRequests();
     }
 
     @PostMapping("/approve-signup")
-    public String approveSignupRequest(@RequestParam Integer tenantId) {
-       return adminService.approveSignupRequest(tenantId);
+    public String approveSignupRequest(@RequestParam String role, @RequestParam Integer id) {
+        return adminService.approveSignupRequest(role, id);
     }
+
 
     @PostMapping("/reject-signup")
-    public void rejectSignupRequest(@RequestParam Integer tenantId) {
-        adminService.rejectSignupRequest(tenantId);
+    public String rejectSignupRequest(@RequestParam String role, @RequestParam Integer id) {
+        return adminService.rejectSignupRequest(role, id);
     }
+
 
     @GetMapping("/flats")
-    public List<Flat> viewFlats() {
-        return adminService.viewFlats();
+    public List<Flat> viewAllFlats() {
+        return adminService.viewAllFlats();
     }
 
-    @PostMapping("/add-flat")
-    public void addFlat(@RequestBody Flat flat) {
-        adminService.addFlat(flat);
+    @PostMapping("/flats")
+    public Flat addFlat(@RequestBody Flat flat, @RequestParam Integer landlord_id) {
+        return adminService.addFlat(flat, landlord_id);
     }
 
-    @PostMapping("/delete-flat")
-    public void deleteFlat(@RequestParam Integer flatId) {
-        adminService.deleteFlat(flatId);
+    @DeleteMapping("/flats/{id}")
+    public void deleteFlat(@PathVariable Integer id) {
+        adminService.deleteFlat(id);
     }
 
     @GetMapping("/tenants")

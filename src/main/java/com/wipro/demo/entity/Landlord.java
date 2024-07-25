@@ -1,6 +1,9 @@
 package com.wipro.demo.entity;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,8 +45,9 @@ public class Landlord {
 
 	@NotNull
 	private Boolean blocked;
-
+	
 	@OneToMany(mappedBy = "landlord")
+	@JsonIgnore
 	private List<Flat> flats;
 
 	public Landlord() {
@@ -148,5 +152,7 @@ public class Landlord {
 	public void setFlats(List<Flat> flats) {
 		this.flats = flats;
 	}
+	
+	
 
 }

@@ -10,10 +10,10 @@ import com.wipro.demo.entity.Landlord;
 import com.wipro.demo.entity.Tenant;
 import com.wipro.demo.repository.AdminRepository;
 import com.wipro.demo.repository.BookingRepository;
-import com.wipro.demo.repository.FlatRepository;
 import com.wipro.demo.repository.LandlordRepository;
 import com.wipro.demo.repository.TenantRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +31,7 @@ public class AdminService {
     private TenantRepository tenantRepository;
 
     @Autowired
-    private FlatRepository flatRepository;
+    private FlatService flatService; 
 
     @Autowired
     private BookingRepository bookingRepository;
@@ -44,44 +44,80 @@ public class AdminService {
         return null;
     }
 
-    public List<Tenant> viewSignupRequests() {
+    public List<Object> viewSignupRequests() {
+        List<Tenant> pendingTenants = tenantRepository.findByStatus("PENDING");
+        List<Landlord> pendingLandlords = landlordRepository.findByStatus("PENDING");
         
-        return tenantRepository.findByStatus("PENDING");
+        List<Object> pendingRequests = new ArrayList<>();
+        pendingRequests.addAll(pendingTenants);
+        pendingRequests.addAll(pendingLandlords);
+        
+        return pendingRequests;
     }
 
-    public String approveSignupRequest(Integer tenantId) {
-        Optional<Tenant> tenant = tenantRepository.findById(tenantId);
-        if (tenant.isPresent()) {
-            Tenant t = tenant.get();
-            t.setStatus("APPROVED");
-            tenantRepository.save(t);
-            return "Tenant approved successfully.";
+
+    public String approveSignupRequest(String role, Integer id) {
+        if ("landlord".equalsIgnoreCase(role)) {
+            return landlordRepository.findById(id)
+                .map(landlord -> {
+                    landlord.setStatus("APPROVED");
+                    landlordRepository.save(landlord);
+                    return "Landlord approved successfully.";
+                })
+                .orElse("Landlord not found.");
+        } else if ("tenant".equalsIgnoreCase(role)) {
+            return tenantRepository.findById(id)
+                .map(tenant -> {
+                    tenant.setStatus("APPROVED");
+                    tenantRepository.save(tenant);
+                    return "Tenant approved successfully.";
+                })
+                .orElse("Tenant not found.");
         } else {
-            return "Tenant not found.";
+            return "Invalid role.";
         }
     }
 
 
-    public void rejectSignupRequest(Integer tenantId) {
-        tenantRepository.deleteById(tenantId);
+
+    public String rejectSignupRequest(String role, Integer id) {
+        if ("landlord".equalsIgnoreCase(role)) {
+            return landlordRepository.findById(id)
+                .map(landlord -> {
+                    landlord.setStatus("REJECTED");
+                    landlordRepository.save(landlord);
+                    return "Landlord rejected successfully.";
+                })
+                .orElse("Landlord not found.");
+        } else if ("tenant".equalsIgnoreCase(role)) {
+            return tenantRepository.findById(id)
+                .map(tenant -> {
+                    tenant.setStatus("REJECTED");
+                    tenantRepository.save(tenant);
+                    return "Tenant rejected successfully.";
+                })
+                .orElse("Tenant not found.");
+        } else {
+            return "Invalid role.";
+        }
     }
 
-    public List<Flat> viewFlats() {
-        return flatRepository.findAll();
-    }
-
-    public void addFlat(Flat flat) {
-        flatRepository.save(flat);
-    }
-
-    public void deleteFlat(Integer flatId) {
-        flatRepository.deleteById(flatId);
-    }
 
     public List<Tenant> viewTenants() {
         return tenantRepository.findAll();
     }
+    public List<Flat> viewAllFlats() {
+        return flatService.getAllFlats();
+    }
 
+    public Flat addFlat(Flat flat, Integer landlord_id) {
+        return flatService.addFlat(flat, landlord_id);
+    }
+
+    public void deleteFlat(Integer id) {
+        flatService.deleteFlat(id);
+    }
+    
     public void blockTenant(Integer tenantId) {
         Optional<Tenant> tenant = tenantRepository.findById(tenantId);
         if (tenant.isPresent()) {
