@@ -5,15 +5,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Integer user_id;
 
 	@NotNull
 	@Size(min = 4, max = 20, message = "Username should be between 4 to 20 characters")
@@ -32,24 +34,24 @@ public class User {
 
 	public User() {}
 
-	public User(Integer id,
+	public User(Integer user_id,
 			@NotNull @Size(min = 4, max = 20, message = "Username should be between 4 to 20 characters") String username,
 			@NotNull @Size(min = 8, message = "Password should be at least 8 characters") String password,
 			@NotNull String role, @NotNull String status) {
 		super();
-		this.id = id;
+		this.user_id = user_id;
 		this.username = username;
 		this.password = password;
 		this.role = role;
 		this.status = status;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getUser_id() {
+		return user_id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getUsername() {
@@ -83,12 +85,7 @@ public class User {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", status="
-				+ status + "]";
-	}
-	
-	
 }
