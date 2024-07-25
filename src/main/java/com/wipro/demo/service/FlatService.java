@@ -15,7 +15,6 @@ public class FlatService {
 	private final FlatRepository flatRepository;
 	private final LandlordRepository landlordRepository;
 
-
 	public FlatService(FlatRepository flatRepository, LandlordRepository landlordRepository) {
 		this.flatRepository = flatRepository;
 		this.landlordRepository = landlordRepository;
@@ -40,7 +39,13 @@ public class FlatService {
 		return flatRepository.save(flat);
 	}
 
-	public void deleteFlat(Integer id) {
+	public String deleteFlat(Integer id) {
+		if (!flatRepository.existsById(id)) {
+			return "Flat with ID " + id + " does not exist.";
+		}
+
 		flatRepository.deleteById(id);
+		return "Flat with ID " + id + " has been deleted successfully.";
 	}
+
 }

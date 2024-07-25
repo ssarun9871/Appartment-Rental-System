@@ -17,142 +17,135 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class AdminService {
 
-    @Autowired
-    private AdminRepository adminRepository;
+	@Autowired
+	private AdminRepository adminRepository;
 
-    @Autowired
-    private LandlordRepository landlordRepository;
+	@Autowired
+	private LandlordRepository landlordRepository;
 
-    @Autowired
-    private TenantRepository tenantRepository;
+	@Autowired
+	private TenantRepository tenantRepository;
 
-    @Autowired
-    private FlatService flatService; 
+	@Autowired
+	private FlatService flatService;
 
-    @Autowired
-    private BookingRepository bookingRepository;
+	@Autowired
+	private BookingRepository bookingRepository;
 
-    public Admin login(String username, String password) {
-        Admin admin = adminRepository.findByUsername(username);
-        if (admin != null && admin.getPassword().equals(password)) {
-            return admin;
-        }
-        return null;
-    }
+	@Autowired
+	private TenantService tenantService;
 
-    public List<Object> viewSignupRequests() {
-        List<Tenant> pendingTenants = tenantRepository.findByStatus("PENDING");
-        List<Landlord> pendingLandlords = landlordRepository.findByStatus("PENDING");
-        
-        List<Object> pendingRequests = new ArrayList<>();
-        pendingRequests.addAll(pendingTenants);
-        pendingRequests.addAll(pendingLandlords);
-        
-        return pendingRequests;
-    }
+	public Admin login(String username, String password) {
+		Admin admin = adminRepository.findByUsername(username);
+		if (admin != null && admin.getPassword().equals(password)) {
+			return admin;
+		}
+		return null;
+	}
 
+	public List<Object> viewSignupRequests() {
+		List<Tenant> pendingTenants = tenantRepository.findByStatus("PENDING");
+		List<Landlord> pendingLandlords = landlordRepository.findByStatus("PENDING");
 
-    public String approveSignupRequest(String role, Integer id) {
-        if ("landlord".equalsIgnoreCase(role)) {
-            return landlordRepository.findById(id)
-                .map(landlord -> {
-                    landlord.setStatus("APPROVED");
-                    landlordRepository.save(landlord);
-                    return "Landlord approved successfully.";
-                })
-                .orElse("Landlord not found.");
-        } else if ("tenant".equalsIgnoreCase(role)) {
-            return tenantRepository.findById(id)
-                .map(tenant -> {
-                    tenant.setStatus("APPROVED");
-                    tenantRepository.save(tenant);
-                    return "Tenant approved successfully.";
-                })
-                .orElse("Tenant not found.");
-        } else {
-            return "Invalid role.";
-        }
-    }
+		List<Object> pendingRequests = new ArrayList<>();
+		pendingRequests.addAll(pendingTenants);
+		pendingRequests.addAll(pendingLandlords);
 
+		return pendingRequests;
+	}
 
+	public String approveSignupRequest(String role, Integer id) {
+		if ("landlord".equalsIgnoreCase(role)) {
+			return landlordRepository.findById(id).map(landlord -> {
+				landlord.setStatus("APPROVED");
+				landlordRepository.save(landlord);
+				return "Landlord approved successfully.";
+			}).orElse("Landlord not found.");
+		} else if ("tenant".equalsIgnoreCase(role)) {
+			return tenantRepository.findById(id).map(tenant -> {
+				tenant.setStatus("APPROVED");
+				tenantRepository.save(tenant);
+				return "Tenant approved successfully.";
+			}).orElse("Tenant not found.");
+		} else {
+			return "Invalid role.";
+		}
+	}
 
-    public String rejectSignupRequest(String role, Integer id) {
-        if ("landlord".equalsIgnoreCase(role)) {
-            return landlordRepository.findById(id)
-                .map(landlord -> {
-                    landlord.setStatus("REJECTED");
-                    landlordRepository.save(landlord);
-                    return "Landlord rejected successfully.";
-                })
-                .orElse("Landlord not found.");
-        } else if ("tenant".equalsIgnoreCase(role)) {
-            return tenantRepository.findById(id)
-                .map(tenant -> {
-                    tenant.setStatus("REJECTED");
-                    tenantRepository.save(tenant);
-                    return "Tenant rejected successfully.";
-                })
-                .orElse("Tenant not found.");
-        } else {
-            return "Invalid role.";
-        }
-    }
+	public String rejectSignupRequest(String role, Integer id) {
+		if ("landlord".equalsIgnoreCase(role)) {
+			return landlordRepository.findById(id).map(landlord -> {
+				landlord.setStatus("REJECTED");
+				landlordRepository.save(landlord);
+				return "Landlord rejected successfully.";
+			}).orElse("Landlord not found.");
+		} else if ("tenant".equalsIgnoreCase(role)) {
+			return tenantRepository.findById(id).map(tenant -> {
+				tenant.setStatus("REJECTED");
+				tenantRepository.save(tenant);
+				return "Tenant rejected successfully.";
+			}).orElse("Tenant not found.");
+		} else {
+			return "Invalid role.";
+		}
+	}
 
+	//-------------------------------------FLAT---------------------------------//
+	public List<Flat> viewAllFlats() {
+		return flatService.getAllFlats();
+	}
 
-    public List<Tenant> viewTenants() {
-        return tenantRepository.findAll();
-    }
-    public List<Flat> viewAllFlats() {
-        return flatService.getAllFlats();
-    }
+	public Flat addFlat(Flat flat, Integer landlord_id) {
+		return flatService.addFlat(flat, landlord_id);
+	}
 
-    public Flat addFlat(Flat flat, Integer landlord_id) {
-        return flatService.addFlat(flat, landlord_id);
-    }
+	public String deleteFlat(Integer id) {
+		return flatService.deleteFlat(id);
+	}
 
-    public void deleteFlat(Integer id) {
-        flatService.deleteFlat(id);
+	//-------------------------------------TENANT---------------------------------//
+    public Tenant addTenant(Tenant tenant) {
+        return tenantService.addTenant(tenant);
     }
     
-    public void blockTenant(Integer tenantId) {
-        Optional<Tenant> tenant = tenantRepository.findById(tenantId);
-        if (tenant.isPresent()) {
-            Tenant t = tenant.get();
-            t.setBlocked(true);
-            tenantRepository.save(t);
-        }
-    }
+	public List<Tenant> viewTenants() {
+		return tenantService.viewTenants();
+	}
 
-    public void deleteTenant(Integer tenantId) {
-        tenantRepository.deleteById(tenantId);
-    }
+	public String blockTenant(Integer tenantId) {
+		return tenantService.blockTenant(tenantId);
+	}
 
-    public List<Booking> viewBookings() {
-        return bookingRepository.findAll();
-    }
+	public String deleteTenant(Integer tenantId) {
+		return tenantService.deleteTenant(tenantId);
+	}
 
-    public void cancelBooking(Integer bookingId) {
-        bookingRepository.deleteById(bookingId);
-    }
+	//-------------------------------------BOOKINGS---------------------------------//
+	public List<Booking> viewBookings() {
+		return bookingRepository.findAll();
+	}
 
-    public List<Landlord> viewLandlords() {
-        return landlordRepository.findAll();
-    }
+	public void cancelBooking(Integer bookingId) {
+		bookingRepository.deleteById(bookingId);
+	}
 
-    public void blockLandlord(Integer landlordId) {
-        Optional<Landlord> landlord = landlordRepository.findById(landlordId);
-        if (landlord.isPresent()) {
-            Landlord l = landlord.get();
-            l.setBlocked(true);
-            landlordRepository.save(l);
-        }
-    }
+	public List<Landlord> viewLandlords() {
+		return landlordRepository.findAll();
+	}
 
-    public void deleteLandlord(Integer landlordId) {
-        landlordRepository.deleteById(landlordId);
-    }
+	public void blockLandlord(Integer landlordId) {
+		Optional<Landlord> landlord = landlordRepository.findById(landlordId);
+		if (landlord.isPresent()) {
+			Landlord l = landlord.get();
+			l.setBlocked(true);
+			landlordRepository.save(l);
+		}
+	}
+
+	public void deleteLandlord(Integer landlordId) {
+		landlordRepository.deleteById(landlordId);
+	}
 }

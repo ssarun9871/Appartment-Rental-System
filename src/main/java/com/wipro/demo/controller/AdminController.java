@@ -40,6 +40,7 @@ public class AdminController {
     }
 
 
+    //---------------------------------------FLAT------------------------------------------//
     @GetMapping("/flats")
     public List<Flat> viewAllFlats() {
         return adminService.viewAllFlats();
@@ -51,8 +52,14 @@ public class AdminController {
     }
 
     @DeleteMapping("/flats/{id}")
-    public void deleteFlat(@PathVariable Integer id) {
-        adminService.deleteFlat(id);
+    public String deleteFlat(@PathVariable Integer id) {
+        return adminService.deleteFlat(id);
+    }
+    
+    //---------------------------------------TENANTS------------------------------------------//
+    @PostMapping("/tenants")
+    public Tenant addTenant(@RequestBody Tenant tenant) {
+        return adminService.addTenant(tenant);
     }
 
     @GetMapping("/tenants")
@@ -61,15 +68,17 @@ public class AdminController {
     }
 
     @PostMapping("/block-tenant")
-    public void blockTenant(@RequestParam Integer tenantId) {
-        adminService.blockTenant(tenantId);
+    public String blockTenant(@RequestParam Integer id) {
+        return adminService.blockTenant(id);
     }
 
-    @PostMapping("/delete-tenant")
-    public void deleteTenant(@RequestParam Integer tenantId) {
-        adminService.deleteTenant(tenantId);
+    @DeleteMapping("/delete-tenant")
+    public String deleteTenant(@RequestParam Integer id) {
+       return adminService.deleteTenant(id);
     }
 
+    
+    //---------------------------------------BOOKINGS------------------------------------------//
     @GetMapping("/bookings")
     public List<Booking> viewBookings() {
         return adminService.viewBookings();
