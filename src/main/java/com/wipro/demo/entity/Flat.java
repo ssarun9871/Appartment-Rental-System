@@ -42,4 +42,95 @@ public class Flat {
 
     @OneToMany(mappedBy = "flat")
     private List<Booking> bookings;
+
+
+	public Flat() {}
+
+
+	public Flat(Integer flat_id,
+			@NotNull(message = "Address cannot be null") @Size(min = 5, max = 255, message = "Address must be between 5 and 255 characters") String address,
+			@NotNull(message = "Availability cannot be null") Boolean availability,
+			@NotNull(message = "Rent cannot be null") @Positive(message = "Rent must be a positive number") Integer rent,
+			Landlord landlord, Tenant tenant, List<Booking> bookings) {
+		super();
+		this.flat_id = flat_id;
+		this.address = address;
+		this.availability = availability;
+		this.rent = rent;
+		this.landlord = landlord;
+		this.tenant = tenant;
+		this.bookings = bookings;
+	}
+
+
+	public Integer getFlat_id() {
+		return flat_id;
+	}
+
+
+	public void setFlat_id(Integer flat_id) {
+		this.flat_id = flat_id;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public Boolean getAvailability() {
+		return availability;
+	}
+
+
+	public void setAvailability(Boolean availability) {
+		this.availability = availability;
+	}
+
+
+	public Integer getRent() {
+		return rent;
+	}
+
+
+	public void setRent(Integer rent) {
+		this.rent = rent;
+	}
+
+
+	public Landlord getLandlord() {
+		return landlord;
+	}
+
+
+	public void setLandlord(Landlord landlord) {
+		this.landlord = landlord;
+	}
+
+
+	public Tenant getTenant() {
+		return tenant;
+	}
+
+
+	public void setTenant(Tenant tenant) {
+		this.tenant = tenant;
+	}
+
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
+    
+    
 }
