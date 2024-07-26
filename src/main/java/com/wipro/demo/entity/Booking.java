@@ -2,6 +2,8 @@ package com.wipro.demo.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,30 +15,33 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Booking {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer booking_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer booking_id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "flat_id")
-    private Flat flat;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "flat_id")
+	@JsonIgnoreProperties("bookings")
+	private Flat flat;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "tenant_id")
-    private Tenant tenant;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "tenant_id")
+	@JsonIgnoreProperties("bookings")
+	private Tenant tenant;
 
-    @NotNull
-    private LocalDate from_date;
+	@NotNull
+	private LocalDate from_date;
 
-    @NotNull
-    private LocalDate to_date;
-    
-    @NotNull
-    private String booking_status;
+	@NotNull
+	private LocalDate to_date;
 
-	public Booking() {}
+	@NotNull
+	private String booking_status;// (PEDNING, CONFIRMED, CANCELLED)
+
+	public Booking() {
+	}
 
 	public Booking(Integer booking_id, @NotNull Flat flat, @NotNull Tenant tenant, @NotNull LocalDate from_date,
 			@NotNull LocalDate to_date, @NotNull String booking_status) {
@@ -96,7 +101,5 @@ public class Booking {
 	public void setBooking_status(String booking_status) {
 		this.booking_status = booking_status;
 	}
-    
-    
 
 }

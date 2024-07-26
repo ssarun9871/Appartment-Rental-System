@@ -14,93 +14,91 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+	@Autowired
+	private AdminService adminService;
 
-    @PostMapping("/login")
-    public Admin login(@RequestBody Admin admin) {
-        return adminService.login(admin.getUsername(), admin.getPassword());
-    }
+	@PostMapping("/login")
+	public Admin login(@RequestBody Admin admin) {
+		return adminService.login(admin.getUsername(), admin.getPassword());
+	}
 
+	@GetMapping("/signup-requests")
+	public List<Object> viewSignupRequests() {
+		return adminService.viewSignupRequests();
+	}
 
-    @GetMapping("/signup-requests")
-    public List<Object> viewSignupRequests() {
-        return adminService.viewSignupRequests();
-    }
+	@PostMapping("/approve-signup")
+	public String approveSignupRequest(@RequestParam String role, @RequestParam Integer id) {
+		return adminService.approveSignupRequest(role, id);
+	}
 
-    @PostMapping("/approve-signup")
-    public String approveSignupRequest(@RequestParam String role, @RequestParam Integer id) {
-        return adminService.approveSignupRequest(role, id);
-    }
+	@PostMapping("/reject-signup")
+	public String rejectSignupRequest(@RequestParam String role, @RequestParam Integer id) {
+		return adminService.rejectSignupRequest(role, id);
+	}
 
+	// ---------------------------------------FLAT------------------------------------------//
+	@GetMapping("/flats")
+	public List<Flat> viewAllFlats() {
+		return adminService.viewAllFlats();
+	}
 
-    @PostMapping("/reject-signup")
-    public String rejectSignupRequest(@RequestParam String role, @RequestParam Integer id) {
-        return adminService.rejectSignupRequest(role, id);
-    }
+	@PostMapping("/flats")
+	public Flat addFlat(@RequestBody Flat flat, @RequestParam Integer landlord_id) {
+		return adminService.addFlat(flat, landlord_id);
+	}
 
+	@DeleteMapping("/flats/{id}")
+	public String deleteFlat(@PathVariable Integer id) {
+		return adminService.deleteFlat(id);
+	}
 
-    //---------------------------------------FLAT------------------------------------------//
-    @GetMapping("/flats")
-    public List<Flat> viewAllFlats() {
-        return adminService.viewAllFlats();
-    }
+	// ---------------------------------------TENANTS------------------------------------------//
+	@PostMapping("/tenants")
+	public Tenant addTenant(@RequestBody Tenant tenant) {
+		return adminService.addTenant(tenant);
+	}
 
-    @PostMapping("/flats")
-    public Flat addFlat(@RequestBody Flat flat, @RequestParam Integer landlord_id) {
-        return adminService.addFlat(flat, landlord_id);
-    }
+	@GetMapping("/tenants")
+	public List<Tenant> viewTenants() {
+		return adminService.viewTenants();
+	}
 
-    @DeleteMapping("/flats/{id}")
-    public String deleteFlat(@PathVariable Integer id) {
-        return adminService.deleteFlat(id);
-    }
-    
-    //---------------------------------------TENANTS------------------------------------------//
-    @PostMapping("/tenants")
-    public Tenant addTenant(@RequestBody Tenant tenant) {
-        return adminService.addTenant(tenant);
-    }
+	@PostMapping("/block-tenant")
+	public String blockTenant(@RequestParam Integer id) {
+		return adminService.blockTenant(id);
+	}
 
-    @GetMapping("/tenants")
-    public List<Tenant> viewTenants() {
-        return adminService.viewTenants();
-    }
+	@DeleteMapping("/delete-tenant")
+	public String deleteTenant(@RequestParam Integer id) {
+		return adminService.deleteTenant(id);
+	}
 
-    @PostMapping("/block-tenant")
-    public String blockTenant(@RequestParam Integer id) {
-        return adminService.blockTenant(id);
-    }
+	// ---------------------------------------LANDLORD------------------------------------------//
 
-    @DeleteMapping("/delete-tenant")
-    public String deleteTenant(@RequestParam Integer id) {
-       return adminService.deleteTenant(id);
-    }
+	@GetMapping("/landlords")
+	public List<Landlord> viewLandlords() {
+		return adminService.viewLandlords();
+	}
 
-    
-    //---------------------------------------BOOKINGS------------------------------------------//
-    @GetMapping("/bookings")
-    public List<Booking> viewBookings() {
-        return adminService.viewBookings();
-    }
+	@PostMapping("/block-landlord")
+	public String blockLandlord(@RequestParam Integer id) {
+		return adminService.blockLandlord(id);
+	}
 
-    @PostMapping("/cancel-booking")
-    public void cancelBooking(@RequestParam Integer bookingId) {
-        adminService.cancelBooking(bookingId);
-    }
+	@DeleteMapping("/delete-landlord")
+	public String deleteLandlord(@RequestParam Integer id) {
+		return adminService.deleteLandlord(id);
+	}
 
-    @GetMapping("/landlords")
-    public List<Landlord> viewLandlords() {
-        return adminService.viewLandlords();
-    }
+	// ---------------------------------------BOOKINGS------------------------------------------//
+	@GetMapping("/bookings")
+	public List<Booking> viewBookings() {
+		return adminService.viewBookings();
+	}
 
-    @PostMapping("/block-landlord")
-    public void blockLandlord(@RequestParam Integer landlordId) {
-        adminService.blockLandlord(landlordId);
-    }
-
-    @PostMapping("/delete-landlord")
-    public void deleteLandlord(@RequestParam Integer landlordId) {
-        adminService.deleteLandlord(landlordId);
-    }
+	@PostMapping("/cancel-booking")
+	public String cancelBooking(@RequestParam Integer id) {
+		return adminService.cancelBooking(id);
+	}
 }

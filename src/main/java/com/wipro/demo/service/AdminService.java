@@ -9,13 +9,11 @@ import com.wipro.demo.entity.Flat;
 import com.wipro.demo.entity.Landlord;
 import com.wipro.demo.entity.Tenant;
 import com.wipro.demo.repository.AdminRepository;
-import com.wipro.demo.repository.BookingRepository;
 import com.wipro.demo.repository.LandlordRepository;
 import com.wipro.demo.repository.TenantRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -33,10 +31,13 @@ public class AdminService {
 	private FlatService flatService;
 
 	@Autowired
-	private BookingRepository bookingRepository;
+	private TenantService tenantService;
 
 	@Autowired
-	private TenantService tenantService;
+	private LandlordService landlordService;
+
+	@Autowired
+	private BookingService bookingService;
 
 	public Admin login(String username, String password) {
 		Admin admin = adminRepository.findByUsername(username);
@@ -57,6 +58,7 @@ public class AdminService {
 		return pendingRequests;
 	}
 
+	// ------------------------------SIGNUP REQUEST------------------------------//
 	public String approveSignupRequest(String role, Integer id) {
 		if ("landlord".equalsIgnoreCase(role)) {
 			return landlordRepository.findById(id).map(landlord -> {
@@ -93,7 +95,7 @@ public class AdminService {
 		}
 	}
 
-	//-------------------------------------FLAT---------------------------------//
+	// -------------------------------------FLAT---------------------------------//
 	public List<Flat> viewAllFlats() {
 		return flatService.getAllFlats();
 	}
@@ -106,11 +108,11 @@ public class AdminService {
 		return flatService.deleteFlat(id);
 	}
 
-	//-------------------------------------TENANT---------------------------------//
-    public Tenant addTenant(Tenant tenant) {
-        return tenantService.addTenant(tenant);
-    }
-    
+	// -------------------------------------TENANT---------------------------------//
+	public Tenant addTenant(Tenant tenant) {
+		return tenantService.addTenant(tenant);
+	}
+
 	public List<Tenant> viewTenants() {
 		return tenantService.viewTenants();
 	}
@@ -123,29 +125,25 @@ public class AdminService {
 		return tenantService.deleteTenant(tenantId);
 	}
 
-	//-------------------------------------BOOKINGS---------------------------------//
-	public List<Booking> viewBookings() {
-		return bookingRepository.findAll();
-	}
-
-	public void cancelBooking(Integer bookingId) {
-		bookingRepository.deleteById(bookingId);
-	}
-
+	// -------------------------------------LANDLORD---------------------------------//
 	public List<Landlord> viewLandlords() {
-		return landlordRepository.findAll();
+		return landlordService.getAllLandlord();
 	}
 
-	public void blockLandlord(Integer landlordId) {
-		Optional<Landlord> landlord = landlordRepository.findById(landlordId);
-		if (landlord.isPresent()) {
-			Landlord l = landlord.get();
-			l.setBlocked(true);
-			landlordRepository.save(l);
-		}
+	public String blockLandlord(Integer id) {
+		return landlordService.blockLandlord(id);
 	}
 
-	public void deleteLandlord(Integer landlordId) {
-		landlordRepository.deleteById(landlordId);
+	public String deleteLandlord(Integer id) {
+		return landlordService.deleteLandlord(id);
+	}
+
+	// -------------------------------------BOOKINGS---------------------------------//
+	public List<Booking> viewBookings() {
+		return bookingService.getAllBookings();
+	}
+
+	public String cancelBooking(Integer id) {
+		return bookingService.cancelBookings(id);
 	}
 }
