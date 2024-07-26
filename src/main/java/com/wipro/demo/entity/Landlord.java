@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class Landlord {
 	private Integer landlord_id;
 
 	@NotNull
+	@Column(unique = true)
 	private String username;
 
 	@NotNull
@@ -45,7 +47,7 @@ public class Landlord {
 
 	@NotNull
 	private Boolean blocked;
-	
+
 	@OneToMany(mappedBy = "landlord")
 	@JsonIgnore
 	private List<Flat> flats;
@@ -152,7 +154,12 @@ public class Landlord {
 	public void setFlats(List<Flat> flats) {
 		this.flats = flats;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Landlord [landlord_id=" + landlord_id + ", username=" + username + ", password=" + password
+				+ ", first_name=" + first_name + ", last_name=" + last_name + ", mobile=" + mobile + ", age=" + age
+				+ ", status=" + status + ", blocked=" + blocked + ", flats=" + flats + "]";
+	}
 
 }

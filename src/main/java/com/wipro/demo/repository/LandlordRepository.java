@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface LandlordRepository extends JpaRepository<Landlord, Integer> {
 	List<Landlord> findByStatus(String status);
+
+	Landlord findByUsername(String username);
 }

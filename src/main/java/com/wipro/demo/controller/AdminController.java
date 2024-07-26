@@ -8,6 +8,7 @@ import com.wipro.demo.entity.Flat;
 import com.wipro.demo.entity.Booking;
 import com.wipro.demo.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -44,12 +45,12 @@ public class AdminController {
 	}
 
 	@PostMapping("/flats")
-	public Flat addFlat(@RequestBody Flat flat, @RequestParam Integer landlord_id) {
+	public ResponseEntity<Object>addFlat(@RequestBody Flat flat, @RequestParam Integer landlord_id) {
 		return adminService.addFlat(flat, landlord_id);
 	}
 
 	@DeleteMapping("/flats/{id}")
-	public String deleteFlat(@PathVariable Integer id) {
+	public ResponseEntity<Object> deleteFlat(@PathVariable Integer id) {
 		return adminService.deleteFlat(id);
 	}
 

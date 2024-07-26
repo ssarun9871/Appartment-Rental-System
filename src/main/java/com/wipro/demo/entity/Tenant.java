@@ -2,6 +2,7 @@ package com.wipro.demo.entity;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,45 +17,46 @@ import jakarta.validation.constraints.Pattern;
 @Entity
 public class Tenant {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer tenant_id;
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer tenant_id;
+
 	@NotNull
+	@Column(unique = true)
 	private String username;
-	
+
 	@NotNull
 	private String password;
 
-    @NotNull
-    private String first_name;
+	@NotNull
+	private String first_name;
 
-    @NotNull
-    private String last_name;
+	@NotNull
+	private String last_name;
 
-    @NotNull
-    @Pattern(regexp = "\\d{10}", message = "Mobile number should be 10 digits")
-    private String mobile;
+	@NotNull
+	@Pattern(regexp = "\\d{10}", message = "Mobile number should be 10 digits")
+	private String mobile;
 
-    @NotNull
-    @Min(value = 18, message = "Age should be >= 18")
-    private Integer age;
-    
+	@NotNull
+	@Min(value = 18, message = "Age should be >= 18")
+	private Integer age;
+
 	@NotNull
 	private String status;
-	
+
 	@NotNull
 	private Boolean blocked;
 
+	@OneToOne
+	@JoinColumn(name = "flat_id")
+	private Flat flat;
 
-    @OneToOne
-    @JoinColumn(name = "flat_id")
-    private Flat flat;
+	@OneToMany(mappedBy = "tenant")
+	private List<Booking> bookings;
 
-    @OneToMany(mappedBy = "tenant")
-    private List<Booking> bookings;
-
-	public Tenant() {}
+	public Tenant() {
+	}
 
 	public Tenant(Integer tenant_id, @NotNull String username, @NotNull String password, @NotNull String first_name,
 			@NotNull String last_name,
@@ -162,6 +164,5 @@ public class Tenant {
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
-	
-	
+
 }

@@ -1,6 +1,7 @@
 package com.wipro.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.wipro.demo.entity.Admin;
@@ -100,11 +101,11 @@ public class AdminService {
 		return flatService.getAllFlats();
 	}
 
-	public Flat addFlat(Flat flat, Integer landlord_id) {
+	public ResponseEntity<Object> addFlat(Flat flat, Integer landlord_id) {
 		return flatService.addFlat(flat, landlord_id);
 	}
 
-	public String deleteFlat(Integer id) {
+	public ResponseEntity<Object> deleteFlat(Integer id) {
 		return flatService.deleteFlat(id);
 	}
 

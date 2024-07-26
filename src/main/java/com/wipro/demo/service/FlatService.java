@@ -4,6 +4,10 @@ import com.wipro.demo.entity.Flat;
 import com.wipro.demo.entity.Landlord;
 import com.wipro.demo.repository.FlatRepository;
 import com.wipro.demo.repository.LandlordRepository;
+import com.wipro.demo.response.ResponseHandler;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +24,21 @@ public class FlatService {
 		this.landlordRepository = landlordRepository;
 	}
 
+    public ResponseEntity<Object> addFlat(Flat flat, Integer landlord_id) {
+        Optional<Landlord> landlordOptional = landlordRepository.findById(landlord_id);
+        
+        if (landlordOptional.isPresent()) {
+            Landlord landlord = landlordOptional.get();
+            flat.setLandlord(landlord);
+            flat.setAvailability(true);
+
+            Flat data = flatRepository.save(flat);
+            return ResponseHandler.responseBuilder("Success", HttpStatus.OK, data);
+        } else {
+            return ResponseHandler.responseBuilder("Landlord not found", HttpStatus.NOT_FOUND, null);
+        }
+    }
+
 	public List<Flat> getAllFlats() {
 		return flatRepository.findAll();
 	}
@@ -28,24 +47,13 @@ public class FlatService {
 		return flatRepository.findById(id);
 	}
 
-	public Flat addFlat(Flat flat, Integer landlord_id) {
+    public ResponseEntity<Object> deleteFlat(Integer id) {
+        if (!flatRepository.existsById(id)) {
+            return ResponseHandler.responseBuilder("Flat with ID " + id + " does not exist.", HttpStatus.NOT_FOUND, null);
+        }
 
-		Landlord landlord = landlordRepository.findById(landlord_id)
-				.orElseThrow(() -> new RuntimeException("Landlord not found"));
-
-		flat.setLandlord(landlord);
-		flat.setAvailability(true);
-
-		return flatRepository.save(flat);
-	}
-
-	public String deleteFlat(Integer id) {
-		if (!flatRepository.existsById(id)) {
-			return "Flat with ID " + id + " does not exist.";
-		}
-
-		flatRepository.deleteById(id);
-		return "Flat with ID " + id + " has been deleted successfully.";
-	}
+        flatRepository.deleteById(id);
+        return ResponseHandler.responseBuilder("Success", HttpStatus.OK, null);
+    }
 
 }
