@@ -24,36 +24,41 @@ public class FlatService {
 		this.landlordRepository = landlordRepository;
 	}
 
-    public ResponseEntity<Object> addFlat(Flat flat, Integer landlord_id) {
-        Optional<Landlord> landlordOptional = landlordRepository.findById(landlord_id);
-        
-        if (landlordOptional.isPresent()) {
-            Landlord landlord = landlordOptional.get();
-            flat.setLandlord(landlord);
-            flat.setAvailability(true);
+	public ResponseEntity<Object> addFlat(Flat flat, Integer landlord_id) {
+		Optional<Landlord> landlordOptional = landlordRepository.findById(landlord_id);
 
-            Flat data = flatRepository.save(flat);
-            return ResponseHandler.responseBuilder("Success", HttpStatus.OK, data);
-        } else {
-            return ResponseHandler.responseBuilder("Landlord not found", HttpStatus.NOT_FOUND, null);
-        }
-    }
+		if (landlordOptional.isPresent()) {
+			Landlord landlord = landlordOptional.get();
+			flat.setLandlord(landlord);
+			flat.setAvailability(true);
+
+			Flat data = flatRepository.save(flat);
+			return ResponseHandler.responseBuilder("Success", HttpStatus.OK, data);
+		} else {
+			return ResponseHandler.responseBuilder("Landlord not found", HttpStatus.NOT_FOUND, null);
+		}
+	}
 
 	public List<Flat> getAllFlats() {
 		return flatRepository.findAll();
+	}
+
+	public List<Flat> getAllAvailableFlats() {
+		return flatRepository.findByAvailability(true);
 	}
 
 	public Optional<Flat> getFlatById(Integer id) {
 		return flatRepository.findById(id);
 	}
 
-    public ResponseEntity<Object> deleteFlat(Integer id) {
-        if (!flatRepository.existsById(id)) {
-            return ResponseHandler.responseBuilder("Flat with ID " + id + " does not exist.", HttpStatus.NOT_FOUND, null);
-        }
+	public ResponseEntity<Object> deleteFlat(Integer id) {
+		if (!flatRepository.existsById(id)) {
+			return ResponseHandler.responseBuilder("Flat with ID " + id + " does not exist.", HttpStatus.NOT_FOUND,
+					null);
+		}
 
-        flatRepository.deleteById(id);
-        return ResponseHandler.responseBuilder("Success", HttpStatus.OK, null);
-    }
+		flatRepository.deleteById(id);
+		return ResponseHandler.responseBuilder("Success", HttpStatus.OK, null);
+	}
 
 }

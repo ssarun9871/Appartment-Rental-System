@@ -12,4 +12,5 @@ public interface LandlordRepository extends JpaRepository<Landlord, Integer> {
 	List<Landlord> findByStatus(String status);
 
 	Landlord findByUsername(String username);
+
 }

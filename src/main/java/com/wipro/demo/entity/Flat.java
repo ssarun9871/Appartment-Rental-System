@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import jakarta.validation.constraints.Size;
 public class Flat {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer flat_id;
 
 	@NotNull(message = "Address cannot be null")
@@ -29,6 +30,7 @@ public class Flat {
 	private String address;
 
 	@NotNull(message = "Availability cannot be null")
+	@Column(columnDefinition = "TINYINT(1)")
 	private Boolean availability;
 
 	@NotNull(message = "Rent cannot be null")

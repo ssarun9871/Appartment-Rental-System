@@ -21,8 +21,6 @@ public class LandlordService {
 	public Landlord addLandlord(Landlord landlord) {
 		landlord.setBlocked(false);
 		landlord.setStatus("PENDING");
-		landlord.setStatus("PENDING");
-		landlord.setBlocked(true);
 		return landlordRepository.save(landlord);
 	}
 

@@ -18,7 +18,7 @@ import jakarta.validation.constraints.Pattern;
 public class Tenant {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer tenant_id;
 
 	@NotNull
@@ -43,7 +43,7 @@ public class Tenant {
 	private Integer age;
 
 	@NotNull
-	private String status;
+	private String status;// (PENDING, APPROVED, REJECTED)
 
 	@NotNull
 	private Boolean blocked;

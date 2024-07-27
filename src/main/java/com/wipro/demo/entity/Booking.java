@@ -16,7 +16,7 @@ import jakarta.validation.constraints.NotNull;
 public class Booking {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer booking_id;
 
 	@NotNull
@@ -32,13 +32,13 @@ public class Booking {
 	private Tenant tenant;
 
 	@NotNull
-	private LocalDate from_date;
+	private LocalDate from_date;// yyyy-mm-dd
 
 	@NotNull
-	private LocalDate to_date;
+	private LocalDate to_date;// yyyy-mm-dd
 
 	@NotNull
-	private String booking_status;// (PEDNING, CONFIRMED, CANCELLED)
+	private String booking_status;// (PEDNING, CONFIRMED, REJECTED, CANCELLED)
 
 	public Booking() {
 	}
@@ -100,6 +100,12 @@ public class Booking {
 
 	public void setBooking_status(String booking_status) {
 		this.booking_status = booking_status;
+	}
+
+	@Override
+	public String toString() {
+		return "Booking [booking_id=" + booking_id + ", flat=" + flat + ", tenant=" + tenant + ", from_date="
+				+ from_date + ", to_date=" + to_date + ", booking_status=" + booking_status + "]";
 	}
 
 }
