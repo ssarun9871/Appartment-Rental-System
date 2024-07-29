@@ -1,6 +1,7 @@
 package com.wipro.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.wipro.demo.entity.Tenant;
 import com.wipro.demo.repository.AdminRepository;
 import com.wipro.demo.repository.LandlordRepository;
 import com.wipro.demo.repository.TenantRepository;
+import com.wipro.demo.response.ResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +41,26 @@ public class AdminService {
 
 	@Autowired
 	private BookingService bookingService;
-
-	public Admin login(String username, String password) {
+//
+//	public Admin login(String username, String password) {
+//		Admin admin = adminRepository.findByUsername(username);
+//		if (admin != null && admin.getPassword().equals(password)) {
+//			return admin;
+//		}
+//		return null;
+//	}
+	
+	public ResponseEntity<Object> login(String username, String password) {
 		Admin admin = adminRepository.findByUsername(username);
-		if (admin != null && admin.getPassword().equals(password)) {
-			return admin;
+		if (admin == null) {
+			return ResponseHandler.responseBuilder("No account found", HttpStatus.UNAUTHORIZED, null);
 		}
-		return null;
+
+		if (!admin.getPassword().equals(password)) {
+			return ResponseHandler.responseBuilder("Incorrect password!", HttpStatus.UNAUTHORIZED, null);
+		}
+
+		return ResponseHandler.responseBuilder("Success", HttpStatus.OK, admin);
 	}
 
 	public List<Object> viewSignupRequests() {

@@ -19,7 +19,7 @@ public class AdminController {
 	private AdminService adminService;
 
 	@PostMapping("/login")
-	public Admin login(@RequestBody Admin admin) {
+	public ResponseEntity<Object> login(@RequestBody Admin admin) {
 		return adminService.login(admin.getUsername(), admin.getPassword());
 	}
 
@@ -45,7 +45,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/flats")
-	public ResponseEntity<Object>addFlat(@RequestBody Flat flat, @RequestParam Integer landlord_id) {
+	public ResponseEntity<Object> addFlat(@RequestBody Flat flat, @RequestParam Integer landlord_id) {
 		return adminService.addFlat(flat, landlord_id);
 	}
 

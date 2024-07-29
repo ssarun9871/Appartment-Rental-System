@@ -46,6 +46,7 @@ public class Landlord {
 	private String status;// (PENDING, APPROVED, REJECTED)
 
 	@NotNull
+	@Column(columnDefinition = "TINYINT(1)")
 	private Boolean blocked;
 
 	@OneToMany(mappedBy = "landlord")

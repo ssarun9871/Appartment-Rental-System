@@ -18,6 +18,12 @@ public class LandlordService {
 	@Autowired
 	private LandlordRepository landlordRepository;
 
+	@Autowired
+	private FlatService flatService;
+	
+	@Autowired
+	private BookingService bookingService;
+
 	public Landlord addLandlord(Landlord landlord) {
 		landlord.setBlocked(false);
 		landlord.setStatus("PENDING");
@@ -46,6 +52,23 @@ public class LandlordService {
 	public List<Landlord> getAllLandlord() {
 		return landlordRepository.findAll();
 	}
+
+	public ResponseEntity<Object> getFlatByLandlord(Integer landlord_id) {
+		return flatService.getFlatByLandlord(landlord_id);
+	}
+	
+	public ResponseEntity<Object> getBookingByLandlord(Integer landlord_id) {
+		return bookingService.getBookingByFlat(landlord_id);
+	}
+	
+	public String confirmBooking(Integer booking_id) {
+		return bookingService.confirmBookings(booking_id);
+	}
+	
+	public String rejectBooking(Integer booking_id) {
+		return bookingService.rejectBookings(booking_id);
+	}
+
 
 	public String blockLandlord(Integer id) {
 		Optional<Landlord> landlord = landlordRepository.findById(id);

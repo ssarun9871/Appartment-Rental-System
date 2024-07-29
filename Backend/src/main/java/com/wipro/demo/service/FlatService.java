@@ -51,6 +51,18 @@ public class FlatService {
 		return flatRepository.findById(id);
 	}
 
+	public ResponseEntity<Object> getFlatByLandlord(Integer landlord_id) {
+		Optional<Landlord> landlord = landlordRepository.findById(landlord_id);
+		
+		if (landlord.isEmpty()) {
+			return ResponseHandler.responseBuilder("Landlord not found", HttpStatus.NOT_FOUND, null);
+		} else {
+			List<Flat> flats = flatRepository.findByLandlord(landlord.get());
+			return ResponseHandler.responseBuilder("Success", HttpStatus.OK, flats);
+		}
+
+	}
+
 	public ResponseEntity<Object> deleteFlat(Integer id) {
 		if (!flatRepository.existsById(id)) {
 			return ResponseHandler.responseBuilder("Flat with ID " + id + " does not exist.", HttpStatus.NOT_FOUND,

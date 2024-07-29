@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.wipro.demo.entity.Booking;
+import com.wipro.demo.entity.Flat;
+import com.wipro.demo.entity.Landlord;
 import com.wipro.demo.entity.Tenant;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
 	List<Booking> findByTenant(Optional<Tenant> tenant);
+	List<Booking> findByFlat(Flat Flat);
 }
