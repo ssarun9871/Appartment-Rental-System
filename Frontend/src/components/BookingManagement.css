@@ -1,0 +1,52 @@
+/* src/components/BookingManagement.css */
+
+.booking-management-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .bookings-table th, .bookings-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .bookings-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .confirm-button, .reject-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .confirm-button {
+    background-color: #6668e4;
+    color: white;
+    margin-right: 5px;
+  }
+  
+  .reject-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .confirm-button:hover {
+    background-color: #45a049;
+  }
+  
+  .reject-button:hover {
+    background-color: #e53935;
+  }
+  
+  span {
+    color: #888;
+  }
+  

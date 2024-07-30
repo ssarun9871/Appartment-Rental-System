@@ -1,22 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { UserProvider } from './components/UserContext';
 import Home from './components/Home';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+import LandlordDashboard from './components/LandlordDashboard';
+import AdminDashboard from './components/AdminDashboard';
+import TenantDashboard from './components/TenantDashboard';
+import Signup from './components/Signup';
 import './App.css';
 
 const App = () => {
   return (
-    <UserProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login/:role" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      </Router>
-    </UserProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login/:role" element={<Login />} />
+        <Route path="/signup/:role" element={<Signup />} />
+        <Route path="/landlorddashboard" element={<LandlordDashboard />} />
+        <Route path="/admindashboard/*" element={<AdminDashboard />} />
+        <Route path="/tenantdashboard" element={<TenantDashboard />} />
+      </Routes>
+    </Router>
   );
 };
 

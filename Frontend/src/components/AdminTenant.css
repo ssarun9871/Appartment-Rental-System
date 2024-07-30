@@ -1,0 +1,115 @@
+/* src/components/AdminTenant.css */
+.admin-tenant-container {
+    background-color: #f4f4f4; /* Light grey background */
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+    width: 100%;
+  }
+
+  
+  .admin-tenant-container h1 {
+    text-align: center;
+    color: #333; /* Dark color for better readability */
+    margin-bottom: 20px;
+  }
+  
+  .admin-tenant-body {
+    display: flex;
+    justify-content: space-between; /* Space out the sections */
+    margin-top: 20px;
+  }
+  
+  .admin-tenant-list,
+  .admin-tenant-add {
+    background-color: #ffffff; /* White background for the sections */
+    min-height: 600px; 
+    border-radius: 8px; /* Rounded corners for a softer look */
+    padding: 20px; /* Padding inside the sections */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: 48%; /* Make each section take up nearly half of the container width */
+  }
+  
+  .admin-tenant-list {
+    width: 50%;
+  }
+  
+  .admin-tenant-add {
+    margin-left: 1%; /* Add space between the sections */
+
+    width: 50%;
+  }
+  
+  .admin-tenant-table {
+    border-collapse: collapse;
+    background-color: #ffffff; /* White background for the table */
+    border-radius: 8px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensure rounded corners are applied */
+  }
+  
+  .admin-tenant-table th,
+  .admin-tenant-table td {
+    width: 100%;
+    padding: 12px 15px;
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #dddddd; /* Light grey border */
+  }
+  
+  .admin-tenant-table th {
+    background-color: #007bff; /* Bright blue background for the header */
+    color: #ffffff; /* White text color for contrast */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .admin-tenant-table tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Light grey background for even rows */
+  }
+  
+  .admin-tenant-table tr:hover {
+    background-color: #f1f1f1; /* Slightly darker grey on hover */
+  }
+  
+  .admin-tenant-block-button,
+  .admin-tenant-delete-button,
+  .admin-tenant-add-button {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded corners */
+    margin-left: 10px; /* Space between buttons */
+  }
+  
+  .admin-tenant-block-button {
+    background-color: #ffcc00; /* Yellow background */
+    color: #333; /* Dark text color */
+    border: none;
+  }
+  
+  .admin-tenant-block-button:disabled {
+    background-color: #cccccc; /* Grey background when disabled */
+    cursor: not-allowed;
+  }
+  
+  .admin-tenant-delete-button {
+    background-color: #ff0000; /* Red background */
+    color: #ffffff; /* White text color */
+    border: none;
+  }
+  
+  .admin-tenant-delete-button:hover {
+    background-color: #cc0000; /* Darker red on hover */
+  }
+  
+  .admin-tenant-add-button {
+    background-color: #28a745; /* Green background */
+    color: #ffffff; /* White text color */
+    border: none;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .admin-tenant-add-form input {
+    width: calc(100% - 20px); /* Full width minus padding */
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+  }
+  

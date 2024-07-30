@@ -1,0 +1,39 @@
+/* src/components/FlatBooking.css */
+
+.flat-booking-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.flats-table-section {
+  margin-top: 20px;
+}
+
+.flats-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.flats-table th, .flats-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.flats-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.book-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book-button:hover {
+  background-color: #45a049;
+}

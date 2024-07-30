@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { UserContext } from './UserContext';
 import './Login.css';
 
 const Login = () => {
@@ -8,8 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
-  const navigate = useNavigate(); // useNavigate instead of useHistory
-  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
   const role = location.pathname.split('/')[2];
 
   const handleSubmit = async (event) => {
@@ -25,13 +23,24 @@ const Login = () => {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
+      const res = await response.json();
 
       if (response.ok) {
-        setUser({ username: data.username });
-        navigate('/dashboard'); // Navigate to dashboard
+        localStorage.setItem('username', res.data.username);
+
+        // Store the correct ID based on the role
+        if (role === 'tenant') {
+          localStorage.setItem('tenant_id', res.data.tenant_id);
+          navigate('/tenantdashboard');
+        } else if (role === 'admin') {
+          localStorage.setItem('id', res.data.id);
+          navigate('/admindashboard');
+        } else if (role === 'landlord') {
+          localStorage.setItem('landlord_id', res.data.landlord_id);
+          navigate('/landlorddashboard');
+        }
       } else {
-        setErrorMessage(data.message || 'An error occurred');
+        setErrorMessage(res.message || 'An error occurred');
       }
     } catch (error) {
       setErrorMessage('An unexpected error occurred.');

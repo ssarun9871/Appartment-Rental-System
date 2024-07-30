@@ -1,0 +1,45 @@
+.landlord-dashboard-container {
+  background-color: #f4f4f4; /* Light grey background for the whole container */
+  padding: 20px;
+  min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+}
+
+.landlord-dashboard-header {
+  display: flex;
+  justify-content: center; /* Center the content */
+  align-items: center; /* Center items vertically */
+  padding-bottom: 20px;
+  background-color: #007bff; /* Bright blue background for the header */
+  color: #ffffff; /* White text color for contrast */
+  border-radius: 8px; /* Rounded corners for a softer look */
+  padding: 15px 20px; /* Padding inside the header */
+}
+
+.landlord-dashboard-header h1 {
+  font-weight: bold;
+  margin: 0;
+  text-align: center; /* Center text within its container */
+}
+
+.landlord-dashboard-body {
+  display: flex;
+  justify-content: space-between; /* Space out the sections */
+  margin-top: 20px;
+}
+
+.landlord-left-section, .landlord-right-section {
+  background-color: #ffffff; /* White background for the sections */
+  min-height: 600px; 
+  border-radius: 8px; /* Rounded corners for a softer look */
+  padding: 20px; /* Padding inside the sections */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 48%; /* Make each section take up nearly half of the container width */
+}
+
+.landlord-left-section {
+  margin-right: 2%; /* Add space between the sections */
+}
+
+.landlord-right-section {
+  margin-left: 2%; /* Add space between the sections */
+}

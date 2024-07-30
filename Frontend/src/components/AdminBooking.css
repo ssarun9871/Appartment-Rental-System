@@ -1,0 +1,76 @@
+.admin-booking-container {
+    padding: 20px;
+    background-color: #f4f4f4; 
+    min-height: 100vh;
+    width:1000px;
+}
+
+.admin-booking-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.admin-booking-body {
+    margin-top: 20px;
+}
+
+.admin-booking-list {
+    background-color: #ffffff; 
+    min-height: 600px;
+    border-radius: 8px; 
+    padding: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.admin-booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    margin: 0 auto; 
+}
+
+.admin-booking-table th,
+.admin-booking-table td {
+    padding: 12px 15px;
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #dddddd; /* Light grey border */
+}
+
+.admin-booking-table th {
+    background-color: #007bff; /* Bright blue background for the header */
+    color: #ffffff; /* White text color for contrast */
+    font-weight: bold; /* Bold text */
+}
+
+.admin-booking-table tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Light grey background for even rows */
+}
+
+.admin-booking-table tr:hover {
+    background-color: #f1f1f1; /* Slightly darker grey on hover */
+}
+
+.admin-booking-cancel-button {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded corners */
+    margin-left: 10px; /* Space between buttons */
+}
+
+.admin-booking-cancel-button:disabled {
+    background-color: #cccccc; /* Grey background when disabled */
+    cursor: not-allowed;
+}
+
+.admin-booking-cancel-button:not(:disabled) {
+    background-color: #ff0000; /* Red background */
+    color: #ffffff; /* White text color */
+    border: none;
+}
+
+.admin-booking-cancel-button:not(:disabled):hover {
+    background-color: #cc0000; /* Darker red on hover */
+}

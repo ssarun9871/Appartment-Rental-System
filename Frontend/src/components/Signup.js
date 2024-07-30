@@ -1,21 +1,32 @@
-// src/Signup.js
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import './Signup.css'; // Import the CSS file for styling
+import { useLocation, useNavigate } from 'react-router-dom';
+import './Signup.css';
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [age, setAge] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    mobile: '',
+    username: '',
+    password: '',
+    age: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
-  const role = location.pathname.split('/')[2]; // Extract role from URL path
+  const navigate = useNavigate();
+  const role = location.pathname.split('/')[2];
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const signupApiEndpoint = `/api/signup/${role}`; // Adjust this as per your API structure
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const signupApiEndpoint = `http://localhost:8001/${role}/signup`;
 
     try {
       const response = await fetch(signupApiEndpoint, {
@@ -23,70 +34,59 @@ const Signup = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ firstName, lastName, age, mobile, username, password }),
+        body: JSON.stringify(formData),
       });
 
+      const res = await response.json();
+
       if (response.ok) {
-        // Handle successful signup
-        const data = await response.json();
-        console.log('Signup successful:', data);
-        // Redirect or update UI as needed
+        navigate(`/login/${role}`);
       } else {
-        // Handle signup error
-        const error = await response.json();
-        console.error('Signup failed:', error);
+        setErrorMessage(res.message || 'An error occurred');
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      setErrorMessage('An unexpected error occurred.');
     }
   };
 
   return (
     <div className="signup-container">
-      <h1>Sign Up as {role.charAt(0).toUpperCase() + role.slice(1)}</h1>
+      <h1>Register as {role.charAt(0).toUpperCase() + role.slice(1)}</h1>
       <form onSubmit={handleSubmit} className="signup-form">
         <div className="form-group">
-          <label htmlFor="firstName">First Name</label>
+          <label htmlFor="first_name">First Name</label>
           <input
             type="text"
-            id="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="John"
+            id="first_name"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleChange}
             required
+            placeholder="Enter your first name"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Last Name</label>
+          <label htmlFor="last_name">Last Name</label>
           <input
             type="text"
-            id="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            placeholder="Doe"
+            id="last_name"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
             required
+            placeholder="Enter your last name"
           />
         </div>
-        <div className="form-group half-width">
-          <label htmlFor="age">Age</label>
-          <input
-            type="number"
-            id="age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="30"
-            required
-          />
-        </div>
-        <div className="form-group half-width">
+        <div className="form-group">
           <label htmlFor="mobile">Mobile</label>
           <input
-            type="tel"
+            type="text"
             id="mobile"
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-            placeholder="+1234567890"
+            name="mobile"
+            value={formData.mobile}
+            onChange={handleChange}
             required
+            placeholder="Enter your mobile number"
           />
         </div>
         <div className="form-group">
@@ -94,10 +94,11 @@ const Signup = () => {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="johndoe"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
             required
+            placeholder="Enter your username"
           />
         </div>
         <div className="form-group">
@@ -105,13 +106,27 @@ const Signup = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="********"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             required
+            placeholder="Enter your password"
           />
         </div>
-        <button type="submit" className="submit-button">Sign Up</button>
+        <div className="form-group">
+          <label htmlFor="age">Age</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            required
+            placeholder="Enter your age"
+          />
+        </div>
+        <button type="submit" className="submit-button">Register</button>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </form>
     </div>
   );

@@ -1,0 +1,72 @@
+/* src/components/AdminLandlord.css */
+.landlords-container {
+    padding: 20px;
+    background-color: #f4f4f4; /* Light grey background for better contrast */
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    width: 1000px;
+  }
+  
+  .landlords-container h1 {
+    text-align: center;
+    color: #333; /* Dark color for better readability */
+    margin-bottom: 20px;
+  }
+  
+  .landlords-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff; /* White background for the table */
+    border-radius: 8px; /* Rounded corners for the table */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden; /* Ensure rounded corners are applied */
+    margin: 0 auto; /* Center the table */
+  }
+  
+  .landlords-table th,
+  .landlords-table td {
+    padding: 12px 15px;
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #dddddd; /* Light grey border */
+  }
+  
+  .landlords-table th {
+    background-color: #007bff; /* Bright blue background for the header */
+    color: #ffffff; /* White text color for contrast */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .landlords-table tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Light grey background for even rows */
+  }
+  
+  .landlords-table tr:hover {
+    background-color: #f1f1f1; /* Slightly darker grey on hover */
+  }
+  
+  .block-button {
+    background-color: #ffcc00; /* Yellow background */
+    color: #333; /* Dark text color */
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  .block-button:disabled {
+    background-color: #cccccc; /* Grey background when disabled */
+    cursor: not-allowed;
+  }
+  
+  .delete-button {
+    background-color: #ff0000; /* Red background */
+    color: #ffffff; /* White text color */
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  .delete-button:hover {
+    background-color: #cc0000; /* Darker red on hover */
+  }
+  
